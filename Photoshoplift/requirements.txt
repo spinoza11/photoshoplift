@@ -1,6 +1,5 @@
 Pillow
 opencv-python
-tk
 screeninfo
 numpy
 matplotlib

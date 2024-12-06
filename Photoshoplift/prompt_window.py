@@ -1,23 +1,39 @@
 import tkinter as tk
+from app_settings import app_settings
+
+number_inputs = []
 
 
-class new_image_window:
-    def __init__(self, app) -> None:
-        self.app = app
-        self.window = tk.Toplevel(background=self.app.body_bg)
+class prompt_window:
+    def __init__(
+        self,
+        settings: app_settings,
+        caller_name: str,
+        number_inputs_names: list,
+        buttons: list,
+    ) -> None:
+        self.window = tk.Toplevel(background=settings.background_color)
+        self.window.title(f"{caller_name}")
+        inputs = [(name, 0) for name in number_inputs_names]
+        self.field_names = []
+        self.fields = []
+        for i in range(len(inputs)):
 
-        self.window.title("New image")
-        self.window.geometry("250x180")
-        self.width = app.settings.im_width
-        self.height = app.settings.im_height
-        self.title1 = tk.Label(
-            self.window, text="width", background=self.app.body_bg
-        ).grid(row=0, column=0, sticky="W", padx=10, pady=10)
+            self.field_names.append(
+                tk.Label(
+                    self.window, text=f"{inputs[i][0]}", background=self.app.body_bg
+                ).grid(row=i, column=0, sticky="W", padx=10, pady=10)
+            )
+            self.field_names.append(
+                tk.Entry(self.window, width=20).grid(
+                    row=i, column=1, sticky="E", padx=10, pady=10
+                )
+            )
         self.a = tk.Entry(self.window, width=20)
         self.a.insert(0, f"{self.width}")
-        self.a.grid(row=0, column=1, sticky="E", padx=10, pady=10)
+        self.a.grid(row=i, column=1, sticky="E", padx=10, pady=10)
         self.title2 = tk.Label(
-            self.window, text="height", background=self.app.body_bg
+            self.window, text="height", background=settings.background_color
         ).grid(row=1, column=0, sticky="W", padx=10, pady=10)
         self.b = tk.Entry(self.window, width=20)
         self.b.insert(0, f"{self.height}")
@@ -40,13 +56,13 @@ class new_image_window:
                 self.app.new_button = tk.Button(
                     self.window,
                     text="New image",
-                    fg=self.app.fg,
-                    font=self.app.font,
-                    activeforeground=self.app.fg,
+                    fg=self.fg,
+                    font=self.font,
+                    activeforeground=self.fg,
                     bd=0,
                     relief="flat",
-                    activebackground=self.app.button_abg,
-                    bg=self.app.button_pbg,
+                    activebackground=self.button_abg,
+                    bg=self.button_pbg,
                     command=lambda: new_image_window(self.app),
                     padx=20,
                     pady=10,
